@@ -101,7 +101,7 @@ module Sensu
               check = check.dup
               started = Time.now.to_f
               begin
-                IO.popen(command + ' 2>&1') do |io|
+                IO.popen("PATH=/opt/sensu/embedded/bin:$PATH #{command}" + ' 2>&1') do |io|
                   check[:output] = io.read
                 end
                 check[:status] = $?.exitstatus

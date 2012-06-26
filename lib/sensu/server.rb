@@ -167,7 +167,7 @@ module Sensu
           when 'pipe'
             execute = Proc.new do
               begin
-                IO.popen(handler[:command] + ' 2>&1', 'r+') do |io|
+                IO.popen("PATH=/opt/sensu/embedded/bin:$PATH #{handler[:command]}" + ' 2>&1', 'r+') do |io|
                   io.write(event.to_json)
                   io.close_write
                   io.read.split(/\n+/).each do |line|
